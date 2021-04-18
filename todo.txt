@@ -4,6 +4,10 @@
 
 
 
-
 ingame events
 --bounty rune breakdown
+	-- rewrite for patch
+	-- every spawn
+	-- overall
+--buyback calc
+if reliable + (unreliable-(unreliable/40)) > floor(200+(net worth/13))
