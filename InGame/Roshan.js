@@ -27,7 +27,6 @@ server.events.on('newclient', function(client) {
 
 //Re-run this function
 setInterval(function () {
-    if (roshDead) {
         if (respawnTime > 0) {
             RoshTimerHandle();
             respawnTime--;
@@ -35,7 +34,6 @@ setInterval(function () {
         else {
             fs.writeFileSync('RoshTimer.txt', '');
         }
-    }
 
 }, 1 * 1000); // Every second decrement timer
 
