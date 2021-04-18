@@ -4,49 +4,49 @@ var fs = require('fs');
 
 var clients = [];
 
+var respawnTime;
 
 server.events.on('newclient', function(client) {
     console.log("New client connection, IP address: " + client.ip + ", Auth token: " + client.auth);
 	clients.push(client);
 
+    //looks for a roshan_state update
     client.on('map:roshan_state', function(roshan_state) {
         console.log("Rosh is now: " + roshan_state);
+        //base respawn time (8 minutes)
 		if (client.gamestate.map.roshan_state == "respawn_base") {
-			console.log("Roshan taken, Respawn in 8-11 minutes");
-		}
-		else if (client.gamestate.map.roshan_state == "respawn_variable"){
-			var timer = client.gamestate.map.roshan_state_end_seconds
-			console.log("Rosh now in variable state, will respawn in: " + timer + " seconds!");
-			console.log("That is " + Math.floor(timer / 60 ) + " minutes and " + (timer % 60) + " seconds!");
+            console.log("Roshan taken, Respawn in 8-11 minutes");
+            respawnTime = 480
+        }
+        //variable respawn (8-11)
+        else if (client.gamestate.map.roshan_state == "respawn_variable") {
+            respawnTime = client.gamestate.map.roshan_state_end_seconds
 		}
     });
-    RuneCheck(client);
 });
 
+//Re-run this function
 setInterval(function () {
-    
-		clients.forEach(function(client) {
-            if (client.gamestate.map != null) {
-                if (client.gamestate.map.roshan_state != "alive" && client.gamestate.map.win_team == "none") {
-                    RoshRespawnHandle(client);
-                }
-                else fs.writeFileSync('RoshTimer.txt', "");
-            }
-		});
-}, .5 * 1000); // Every left seconds
+        if (respawnTime > 0) {
+            RoshTimerHandle();
+            respawnTime--;
+        }
+        else {
+            fs.writeFileSync('RoshTimer.txt', '');
+        }
 
-function RoshRespawnHandle(client) {
-    var respawnTimer = client.gamestate.map.roshan_state_end_seconds;
-    var respawnMinutes = Math.floor(respawnTimer / 60);
-    var respawnSeconds = (respawnTimer % 60);
+}, 1 * 1000); // Every second decrement timer
+
+function RoshTimerHandle() {
+    var respawnMinutes = Math.floor(respawnTime / 60);
+    var respawnSeconds = (respawnTime % 60);
     var readableRespawnSeconds = LeadPad(respawnSeconds);
     var readableTimer = respawnMinutes + ":" + readableRespawnSeconds;
-    //console.log("Respawn Timer = " + respawnTimer)
-    //console.log(respawnMinutes + ":" + readableRespawnSeconds + " (" + respawnSeconds + ")")
     fs.writeFileSync('RoshTimer.txt', readableTimer);
 }
 
-
+//this adds a leading 0 to a number if it is under 10. e.g. if timer is 1 minute and 9 seconds it will return 09
+//by default text output would read 10:9.
 function LeadPad(num) {
     num = num.toString();
     while (num.length < 2) num = "0" + num;

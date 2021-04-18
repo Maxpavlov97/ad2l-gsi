@@ -91,3 +91,8 @@ function RuneIdentifier(playernumber, client) {
 
 }
 
+
+function NearTo(x, target) {
+    var variance = 400;
+    return x >= (target - variance) && x <= (target + variance);
+}
