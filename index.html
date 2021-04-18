@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Socket.IO chat</title>
+    <style>
+      body {
+        margin: 0;
+        padding-bottom: 3rem;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Helvetica, Arial, sans-serif;
+
+        position: fixed;
+        bottom: 0px;
+        width: 100%;
+      }
+      .radiant_pick {
+        padding: 3px;
+        height: 72px;
+        width: 128px;
+      }
+      .dire_pick {
+        padding: 3px;
+        height: 72px;
+        width: 128px;
+      }
+      .radiant_ban {
+        padding: 3px;
+        height: 36px;
+        width: 64px;
+        filter: grayscale(100%);
+      }
+      .dire_ban {
+        padding: 3px;
+        height: 36px;
+        width: 64px;
+        filter: grayscale(100%);
+      }
+      .selected {
+        border: 3px solid gold;
+      }
+      .player_container {
+        width: 136px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        align-items: center;
+      }
+      .badge_container {
+        position: relative;
+      }
+      .star {
+        width: 64px;
+        position: absolute;
+        left: 0px;
+      }
+      .badge {
+        width: 64px;
+        border-radius: 25%;
+      }
+      .player_avatar {
+        width: 64px;
+      }
+      .player_name {
+        font-weight: bold;
+        text-align: center;
+      }
+      #main-container {
+        display: grid;
+        grid-template-columns: auto 20% auto;
+        grid-template-rows: auto auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="main-container">
+      <div id="radiantPlayers" style="display: flex; justify-content: flex-end">
+        <div class="player_container">
+          <div id="player0_name" class="player_name"></div>
+          <img id="player0_avatar" class="player_avatar" />
+          <div id="player0_rank" class="badge_container"></div>
+        </div>
+        <div class="player_container">
+          <div id="player1_name" class="player_name"></div>
+          <img id="player1_avatar" class="player_avatar" />
+          <div id="player1_rank" class="badge_container"></div>
+        </div>
+        <div class="player_container">
+          <div id="player2_name" class="player_name"></div>
+          <img id="player2_avatar" class="player_avatar" />
+          <div id="player2_rank" class="badge_container"></div>
+        </div>
+        <div class="player_container">
+          <div id="player3_name" class="player_name"></div>
+          <img id="player3_avatar" class="player_avatar" />
+          <div id="player3_rank" class="badge_container"></div>
+        </div>
+        <div class="player_container">
+          <div id="player4_name" class="player_name"></div>
+          <img id="player4_avatar" class="player_avatar" />
+          <div id="player4_rank" class="badge_container"></div>
+        </div>
+      </div>
+      <div id="spacer"></div>
+      <div id="direPlayers" style="display: flex">
+        <div class="player_container">
+          <div id="player5_name" class="player_name"></div>
+          <img id="player5_avatar" class="player_avatar" />
+          <div id="player5_rank" class="badge_container"></div>
+        </div>
+        <div class="player_container">
+          <div id="player6_name" class="player_name"></div>
+          <img id="player6_avatar" class="player_avatar" />
+          <div id="player6_rank" class="badge_container"></div>
+        </div>
+        <div class="player_container">
+          <div id="player7_name" class="player_name"></div>
+          <img id="player7_avatar" class="player_avatar" />
+          <div id="player7_rank" class="badge_container"></div>
+        </div>
+        <div class="player_container">
+          <div id="player8_name" class="player_name"></div>
+          <img id="player8_avatar" class="player_avatar" />
+          <div id="player8_rank" class="badge_container"></div>
+        </div>
+        <div class="player_container">
+          <div id="player9_name" class="player_name"></div>
+          <img id="player9_avatar" class="player_avatar" />
+          <div id="player9_rank" class="badge_container"></div>
+        </div>
+      </div>
+      <div style="display: flex; justify-content: flex-end">
+        <div id="radiant_container" style="width: fit-content">
+          <div
+            id="radiant_bans"
+            style="display: flex; justify-content: flex-start"
+          >
+            <img
+              class="radiant_ban"
+              id="radiantban0"
+              src="https://ad2l.s3.amazonaws.com/empty.png"
+            />
+            <img
+              class="radiant_ban"
+              id="radiantban1"
+              src="https://ad2l.s3.amazonaws.com/empty.png"
+            />
+            <img
+              class="radiant_ban"
+              id="radiantban2"
+              src="https://ad2l.s3.amazonaws.com/empty.png"
+            />
+            <img
+              class="radiant_ban"
+              id="radiantban3"
+              src="https://ad2l.s3.amazonaws.com/empty.png"
+            />
+            <img
+              class="radiant_ban"
+              id="radiantban4"
+              src="https://ad2l.s3.amazonaws.com/empty.png"
+            />
+            <img
+              class="radiant_ban"
+              id="radiantban5"
+              src="https://ad2l.s3.amazonaws.com/empty.png"
+            />
+            <img
+              class="radiant_ban"
+              id="radiantban6"
+              src="https://ad2l.s3.amazonaws.com/empty.png"
+            />
+          </div>
+          <div id="radiant_picks" style="display: flex">
+            <img
+              class="radiant_pick"
+              id="radiantpick0"
+              src="https://ad2l.s3.amazonaws.com/empty.png"
+            />
+            <img
+              class="radiant_pick"
+              id="radiantpick1"
+              src="https://ad2l.s3.amazonaws.com/empty.png"
+            />
+            <img
+              class="radiant_pick"
+              id="radiantpick2"
+              src="https://ad2l.s3.amazonaws.com/empty.png"
+            />
+            <img
+              class="radiant_pick"
+              id="radiantpick3"
+              src="https://ad2l.s3.amazonaws.com/empty.png"
+            />
+            <img
+              class="radiant_pick"
+              id="radiantpick4"
+              src="https://ad2l.s3.amazonaws.com/empty.png"
+            />
+          </div>
+        </div>
+      </div>
+      <div id="center-container" style="display: flex; justify-content: center">
+        <span id="radiant_bonus_time" style="font-size: 24px">2:10</span>
+        <span
+          id="draft_clock"
+          style="font-size: 64px; margin-left: 16px; margin-right: 16px"
+          >0:30</span
+        >
+        <span id="dire_bonus_time" style="font-size: 24px">2:10</span>
+      </div>
+      <div id="dire_container" style="width: fit-content">
+        <div id="dire_bans" style="display: flex; justify-content: flex-end">
+          <img
+            class="dire_ban"
+            id="direban0"
+            src="https://ad2l.s3.amazonaws.com/empty.png"
+          />
+          <img
+            class="dire_ban"
+            id="direban1"
+            src="https://ad2l.s3.amazonaws.com/empty.png"
+          />
+          <img
+            class="dire_ban"
+            id="direban2"
+            src="https://ad2l.s3.amazonaws.com/empty.png"
+          />
+          <img
+            class="dire_ban"
+            id="direban3"
+            src="https://ad2l.s3.amazonaws.com/empty.png"
+          />
+          <img
+            class="dire_ban"
+            id="direban4"
+            src="https://ad2l.s3.amazonaws.com/empty.png"
+          />
+          <img
+            class="dire_ban"
+            id="direban5"
+            src="https://ad2l.s3.amazonaws.com/empty.png"
+          />
+          <img
+            class="dire_ban"
+            id="direban6"
+            src="https://ad2l.s3.amazonaws.com/empty.png"
+          />
+        </div>
+        <div id="dire_picks" style="display: flex; justify-content: flex-end">
+          <img
+            class="dire_pick"
+            id="direpick0"
+            src="https://ad2l.s3.amazonaws.com/empty.png"
+          />
+          <img
+            class="dire_pick"
+            id="direpick1"
+            src="https://ad2l.s3.amazonaws.com/empty.png"
+          />
+          <img
+            class="dire_pick"
+            id="direpick2"
+            src="https://ad2l.s3.amazonaws.com/empty.png"
+          />
+          <img
+            class="dire_pick"
+            id="direpick3"
+            src="https://ad2l.s3.amazonaws.com/empty.png"
+          />
+          <img
+            class="dire_pick"
+            id="direpick4"
+            src="https://ad2l.s3.amazonaws.com/empty.png"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      style="display: flex; justify-content: center; align-items: center"
+    ></div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      const cdn = "http://cdn.dota2.com/apps/dota2/images/heroes/";
+      const cdn_end = "_full.png";
+
+      var pick = false;
+      var radiantBanNum = 0;
+      var radiantPickNum = 0;
+      var direBanNum = 0;
+      var direPickNum = 0;
+      var activeTeam;
+
+      var socket = io();
+      socket.on("pick", (e) => {
+        console.log(e);
+        if (e.value)
+          document.getElementById(e.team + "pick" + e.num).src =
+            cdn + e.value + cdn_end;
+        else
+          document.getElementById(e.team + "pick" + e.num).src =
+            "https://ad2l.s3.amazonaws.com/empty.png";
+
+        if (e.team == "radiant") radiantPickNum = e.num + 1;
+        if (e.team == "dire") direPickNum = e.num + 1;
+        changeSelection();
+      });
+      socket.on("ban", (e) => {
+        console.log(e);
+        if (e.value)
+          document.getElementById(e.team + "ban" + e.num).src =
+            cdn + e.value + cdn_end;
+        else
+          document.getElementById(e.team + "ban" + e.num).src =
+            "https://ad2l.s3.amazonaws.com/empty.png";
+
+        if (e.team == "radiant") radiantBanNum = e.num + 1;
+        if (e.team == "dire") direBanNum = e.num + 1;
+        changeSelection();
+      });
+      socket.on("activeteam_time_remaining", (e) => {
+        //console.log(e);
+        document.getElementById("draft_clock").textContent = time(e);
+      });
+
+      socket.on("activeteam", (e) => {
+        if (e == 2) activeTeam = "radiant";
+        else activeTeam = "dire";
+        console.log(activeTeam);
+        if (radiantBanNum == 0 && direBanNum == 0) changeSelection();
+      });
+      socket.on("radiant_bonus_time", (e) => {
+        document.getElementById("radiant_bonus_time").textContent = time(e);
+      });
+      socket.on("dire_bonus_time", (e) => {
+        document.getElementById("dire_bonus_time").textContent = time(e);
+      });
+      socket.on("pick/ban", (e) => {
+        pick = e;
+        if (e) console.log("pick");
+        else console.log("ban");
+      });
+
+      socket.on("playerRanks", (e) => {
+        // ProName: '',
+        // PubName: '',
+        // avatar: 'https://',
+        // rank: { medal: 'Ancient', stars: 4 },
+        // leaderboard:
+        console.log(e);
+        const rankBaseUrl =
+          "http://ad2l.s3-website-us-east-1.amazonaws.com/img/";
+        for (var i = 0; i < e.length; i++) {
+          const player = e[i];
+          const playerAvatarElement = document.getElementById(
+            "player" + i + "_avatar"
+          );
+          const playerRankElement = document.getElementById(
+            "player" + i + "_rank"
+          );
+          const playerNameElement = document.getElementById(
+            "player" + i + "_name"
+          );
+
+          //rank
+          let badge = document.createElement("img");
+          badge.classList.add("badge");
+          badge.src = rankBaseUrl + player.rank.medal + ".png";
+          playerRankElement.append(badge);
+
+          if (player.rank.stars != 0) {
+            let star = document.createElement("img");
+            star.classList.add("star");
+            star.src = rankBaseUrl + player.rank.stars + ".png";
+            playerRankElement.append(star);
+          }
+
+          //name
+          playerNameElement.textContent = player.ProName;
+
+          //avatar
+          playerAvatarElement.src = player.avatar;
+        }
+      });
+      socket.on("currentDraft", (e) => {
+        catchUpDraft(e);
+      });
+
+      function time(num) {
+        let minutes = Math.floor(num / 60);
+        let seconds = num % 60;
+        if (seconds < 10) return minutes + ":0" + seconds;
+        else return minutes + ":" + seconds;
+      }
+
+      function changeSelection() {
+        var arrayToDelete = document.getElementsByClassName("selected");
+        for (var i = 0; i < arrayToDelete.length; i++) {
+          //arrayToDelete[i].classList.remove("selected");
+        }
+
+        let id;
+        if (activeTeam == "radiant") {
+          if (pick) {
+            if (radiantPickNum > 4) return;
+            id = "radiantpick" + radiantPickNum;
+          } else {
+            if (radiantBanNum > 6) return;
+            id = "radiantban" + radiantBanNum;
+          }
+        }
+        if (activeTeam == "dire") {
+          if (pick) {
+            if (direPickNum > 4) return;
+            id = "direpick" + direPickNum;
+          } else {
+            if (direBanNum > 6) return;
+            id = "direban" + direBanNum;
+          }
+        }
+
+        console.log(id);
+        //document.getElementById(id).classList.add("selected");
+        document.getElementById(id).src =
+          "https://media1.giphy.com/media/xTkcEQACH24SMPxIQg/giphy.gif?cid=ecf05e4768oisjgare9bkbqdbd4hu6eyvs4xatddll0yvlhh&rid=giphy.gif";
+      }
+
+      function catchUpDraft(currentDraft) {
+        console.log(currentDraft);
+        document.getElementById("radiant_bonus_time").textContent = time(
+          currentDraft.radiant_bonus_time
+        );
+        document.getElementById("dire_bonus_time").textContent = time(
+          currentDraft.dire_bonus_time
+        );
+        document.getElementById("draft_clock").textContent = time(
+          currentDraft.activeteam_time_remaining
+        );
+        setPickBans(currentDraft.team2, "radiant");
+        setPickBans(currentDraft.team3, "dire");
+        function setPickBans(team, side) {
+          for (const e in team) {
+            if (e.startsWith("pick") && e.endsWith("class") && team[e] != "") {
+              document.getElementById(side + "pick" + e[4]).src =
+                cdn + team[e] + cdn_end;
+            }
+            if (e.startsWith("ban") && e.endsWith("class") && team[e] != "") {
+              document.getElementById(side + "ban" + e[3]).src =
+                cdn + team[e] + cdn_end;
+            }
+          }
+        }
+      }
+
+      //http://cdn.dota2.com/apps/dota2/images/heroes/axe_full.png
+    </script>
+  </body>
+</html>

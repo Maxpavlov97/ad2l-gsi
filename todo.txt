@@ -1,0 +1,9 @@
+--fix player display
+--make more robust
+--add captain symbol for draft
+
+
+
+
+ingame events
+--bounty rune breakdown
