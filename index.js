@@ -1,4 +1,5 @@
-const app = require("express")();
+const express = require("express");
+const app = express();
 const http = require("http").Server(app);
 const io = require("socket.io")(http);
 const fetch = require("node-fetch");
@@ -7,11 +8,9 @@ var d2gsi = require("dota2-gsi");
 var server = new d2gsi();
 var playerranks;
 var client_g;
-const authorizedToken = "stagedWeek4112";
+const authorizedToken = "maxtest";
 
-app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/index.html");
-});
+app.use(express.static("frontend"));
 
 io.on("connection", (socket) => {
   console.log("a user connected");
