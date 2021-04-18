@@ -62,7 +62,7 @@ socket.on("playerRanks", (e) => {
   // rank: { medal: 'Ancient', stars: 4 },
   // leaderboard:
   console.log(e);
-  const rankBaseUrl = "http://ad2l.s3-website-us-east-1.amazonaws.com/img/";
+  const rankBaseUrl = "./img/medals/";
   for (var i = 0; i < e.length; i++) {
     const player = e[i];
     const playerAvatarElement = document.getElementById(
@@ -130,8 +130,7 @@ function changeSelection() {
 
   console.log(id);
   //document.getElementById(id).classList.add("selected");
-  document.getElementById(id).src =
-    "https://media1.giphy.com/media/xTkcEQACH24SMPxIQg/giphy.gif?cid=ecf05e4768oisjgare9bkbqdbd4hu6eyvs4xatddll0yvlhh&rid=giphy.gif";
+  document.getElementById(id).src = "./img/waiting.png";
 }
 
 function catchUpDraft(currentDraft) {
