@@ -53,7 +53,7 @@ class GsiHandler {
    */
   onInit(input) {
     console.log(input.gamestate.draft);
-    //Catch up mid draft
+    //Catch up when input joins mid draft
     var draft = input.gamestate.draft;
     this.draft.activeteam = draft.activeteam;
     this.draft.pick = draft.pick;
@@ -68,35 +68,79 @@ class GsiHandler {
     for (const property in draft.team3) {
       if (property.endsWith("class")) {
         if (property.startsWith("pick"))
-          this.draft.dire.picks.push(draft.team2[property]);
+          this.draft.dire.picks.push(draft.team3[property]);
         else if (property.startsWith("ban"))
-          this.draft.dire.bans.push(draft.team2[property]);
+          this.draft.dire.bans.push(draft.team3[property]);
       }
     }
-    this.send("activeteam_time_remaining", draft.activeteam_time_remaining);
-    this.send("radiant_bonus_time", draft.radiant_bonus_time);
-    this.send("dire_bonus_time", draft.dire_bonus_time);
 
-    let i = 0;
-    for (const pick of this.draft.radiant.picks) {
-      this.send("pick", { team: "radiant", value: pick, num: i++ });
-    }
-    i = 0;
-    for (const ban of this.draft.radiant.bans) {
-      this.send("ban", { team: "radiant", value: ban, num: i++ });
-    }
-    i = 0;
-    for (const pick of this.draft.dire.picks) {
-      this.send("pick", { team: "dire", value: pick, num: i++ });
-    }
-    i = 0;
-    for (const ban of this.draft.dire.bans) {
-      this.send("ban", { team: "dire", value: ban, num: i++ });
-    }
+    let io = this.output;
+    //send to waiting frontends
+    this.sendDraftToClient((event, data) => {
+      io.emit(event, data);
+    });
+
+    //catchup when output joins middraft
+    io.on("connection", (socket) => {
+      this.sendDraftToClient((event, data) => {
+        io.to(socket.id).emit(event, data);
+      });
+    });
 
     //console.log(input.gamestate.previously);
     //input has the following{ip,auth,gamestate}
     //add stuff here to do when receiving a new game client. Pull info from the gamestate to bring the stats up to date?
+  }
+  /**
+   * ugly copy pasted function from draft.js for one purpose, not smart enough to figure out cleaner solution.
+   */
+  getNextSelectionObject() {
+    const team = this.draft.activeteam;
+    const pick = this.draft.pick;
+    let side = team == 2 ? "radiant" : "dire";
+    let pickban = pick ? "picks" : "bans";
+
+    console.log(JSON.stringify(this.draft));
+    let num = this.draft[side][pickban].findIndex((e) => {
+      return !e;
+    });
+    //if it can't find an empty index in the draft array, return the "next available slot"
+    if (num == -1) num = this.draft[side][pickban].length;
+
+    return {
+      team: team,
+      pick: pick,
+      num: num,
+    };
+  }
+
+  sendDraftToClient(sendFunction) {
+    let i = 0;
+    for (const pick of this.draft.radiant.picks) {
+      sendFunction("pick", { team: "radiant", value: pick, num: i++ });
+    }
+    i = 0;
+    for (const pick of this.draft.dire.picks) {
+      sendFunction("pick", { team: "dire", value: pick, num: i++ });
+    }
+    i = 0;
+    for (const ban of this.draft.radiant.bans) {
+      sendFunction("ban", { team: "radiant", value: ban, num: i++ });
+    }
+    i = 0;
+    for (const ban of this.draft.dire.bans) {
+      sendFunction("ban", { team: "dire", value: ban, num: i++ });
+    }
+    sendFunction("selection", this.getNextSelectionObject());
+    sendFunction(
+      "activeteam_time_remaining",
+      this.input.gamestate.draft.activeteam_time_remaining
+    );
+    sendFunction(
+      "radiant_bonus_time",
+      this.input.gamestate.draft.radiant_bonus_time
+    );
+    sendFunction("dire_bonus_time", this.input.gamestate.draft.dire_bonus_time);
   }
 }
 module.exports = GsiHandler;

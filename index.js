@@ -12,12 +12,15 @@ var server = new d2gsi({
 });
 
 const GsiHandler = require("./my_modules/main");
+var Handler;
 
 app.use(express.static("frontend"));
 
 //display website connects
 io.on("connection", (socket) => {
   console.log("a user connected");
+  console.log(socket.id);
+  catchUpClientDraft(socket);
 
   socket.on("disconnect", () => {
     console.log("user disconnected");
@@ -35,7 +38,7 @@ server.events.on("newclient", function (client) {
     "New client connection, IP address: " + client.ip + ", Auth token: "
   );
   console.log(client.auth);
-  const Handler = new GsiHandler(client, io);
+  Handler = new GsiHandler(client, io);
   var draftHandler = new (require("./my_modules/draft"))(Handler);
 
   // console.log("calling getranks from client start");
@@ -96,4 +99,11 @@ function steamID(steamID64) {
   var steamID32 = steamID64.substring(7);
   steamID32 -= 7960265728;
   return steamID32;
+}
+
+function catchUpClientDraft(socket) {
+  // var draft = Handler.input.gamestate.draft;
+  // customSend("activeteam_time_remaining", draft.activeteam_time_remaining);
+  // customSend("radiant_bonus_time", draft.radiant_bonus_time);
+  // customSend("dire_bonus_time", draft.dire_bonus_time);
 }

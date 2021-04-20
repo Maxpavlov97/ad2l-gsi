@@ -45,9 +45,12 @@ class DraftEvents {
             (function (e) {
               var num = pick;
               let handle = handler;
+              let selection = (h) => {
+                getNextSelection(h);
+              };
               return function (e) {
                 handle.draft.radiant.picks[num] = e;
-                getNextSelection(handle);
+                selection(handle);
                 return { team: "radiant", value: e, num: num };
               };
             })()
@@ -61,9 +64,12 @@ class DraftEvents {
             (function (e) {
               var num = pick;
               let handle = handler;
+              let selection = (h) => {
+                getNextSelection(h);
+              };
               return function (e) {
                 handle.draft.dire.picks[num] = e;
-                getNextSelection(handle);
+                selection(handle);
                 return { team: "dire", value: e, num: num };
               };
             })()
@@ -79,9 +85,12 @@ class DraftEvents {
             (function (e) {
               var num = ban;
               let handle = handler;
+              let selection = (h) => {
+                getNextSelection(h);
+              };
               return function (e) {
                 handle.draft.radiant.bans[num] = e;
-                getNextSelection(handle);
+                selection(handle);
                 return { team: "radiant", value: e, num: num };
               };
             })()
@@ -93,34 +102,41 @@ class DraftEvents {
             (function (e) {
               var num = ban;
               let handle = handler;
+              let selection = (h) => {
+                getNextSelection(h);
+              };
               return function (e) {
                 handle.draft.dire.bans[num] = e;
-                getNextSelection(handle);
+                selection(handle);
                 return { team: "dire", value: e, num: num };
               };
             })()
           );
       }
     }
-    function getNextSelection(handler) {
-      const team = handler.draft.activeteam;
-      const pick = handler.draft.pick;
-      let side = team == 2 ? "radiant" : "dire";
-      let pickban = pick ? "picks" : "bans";
+    var getNextSelection = (handler) => {
+      handler.send("selection", this.getNextSelectionObject(handler));
+    };
+  }
 
-      console.log(JSON.stringify(handler.draft));
-      let num = handler.draft[side][pickban].findIndex((e) => {
-        return !e;
-      });
-      //if it can't find an empty index in the draft array, return the "next available slot"
-      if (num == -1) num = handler.draft[side][pickban].length;
+  getNextSelectionObject(handler) {
+    const team = handler.draft.activeteam;
+    const pick = handler.draft.pick;
+    let side = team == 2 ? "radiant" : "dire";
+    let pickban = pick ? "picks" : "bans";
 
-      handler.send("selection", {
-        team: team,
-        pick: pick,
-        num: num,
-      });
-    }
+    console.log(JSON.stringify(handler.draft));
+    let num = handler.draft[side][pickban].findIndex((e) => {
+      return !e;
+    });
+    //if it can't find an empty index in the draft array, return the "next available slot"
+    if (num == -1) num = handler.draft[side][pickban].length;
+
+    return {
+      team: team,
+      pick: pick,
+      num: num,
+    };
   }
 }
 module.exports = DraftEvents;
