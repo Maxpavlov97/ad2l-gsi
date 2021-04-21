@@ -3,7 +3,7 @@ const socket = io();
 window.addEventListener("load", main);
 
 function main() {
-  draft_addEvents();
+        draft_addEvents();
 }
 
 socket.on("playerRanks", (e) => {

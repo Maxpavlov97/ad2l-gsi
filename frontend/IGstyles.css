@@ -1,0 +1,11 @@
+.respawntimer {
+    position: fixed;
+    bottom: 115px;
+    left: 253px;
+    width: 300px;
+    align-content: center;
+    color: white;
+    font-size: 20px;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+    text-anchor: middle;
+}

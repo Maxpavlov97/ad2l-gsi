@@ -11,3 +11,5 @@ ingame events
 	-- overall
 --buyback calc
 if reliable + (unreliable-(unreliable/40)) > floor(200+(net worth/13))
+
+
