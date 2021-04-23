@@ -1,8 +1,11 @@
 {
   "ExpandedNodes": [
     "",
-    "\\InGame"
+    "\\frontend",
+    "\\frontend\\modules",
+    "\\InGame",
+    "\\my_modules"
   ],
-  "SelectedNode": "\\index.html",
+  "SelectedNode": "\\todo.txt",
   "PreviewInSolutionExplorer": false
 }

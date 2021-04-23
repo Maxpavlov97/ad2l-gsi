@@ -1,3 +1,5 @@
+const GsiHandler = require("../my_modules/main");
+const fs = require('fs')
 class RoshanEvents {
 
     constructor(handler) {
@@ -6,72 +8,44 @@ class RoshanEvents {
     }
 
     setEvents(handler) {
-
-        //handler.addEvent("map:roshan_state", "roshState", (RoshState) => {
-        //    console.log("logging e: " + RoshState);
-        //    return RoshState;
-        //});
         handler.addEvent("map:roshan_state_end_seconds", "roshTimer", (e) => {
-            return e;      
-        })
+            return e;
+        });
 
-        /* TODO: Aegis timer
-         * Item icons
-         */
-
-
+        //checks for aegis in inventory
+        handler.addEvent("map:roshan_state_end_seconds", "aegisHeld", (e) => {
+            //makes sure rosh is in right phase to even allow for aegis (cant have aegis while rosh is alive or in variable respawn)
+            if (this.handler.input.gamestate.map.roshan_state == "respawn_base") {
+                //checks to make sure aegis timer isnt expired
+                if ((this.handler.input.gamestate.map.roshan_state_end_seconds - 180) > 0) {
+                    //for each player
+                    for (var i = 0; i < 10; i++) {
+                        //save the player id for next loop
+                        var playerID = i;
+                        //for each item slot (this includes backpack which aegis cant go in but easy to copy paste for other items)
+                        for (var j = 0; j < 9; j++) {
+                            //set the teamid to dire
+                            var teamid = 3;
+                            //if the player is on radiant, set teamid to radiant
+                            if (playerID < 5) teamid = 2;
+                            //this will get us hero name
+                            let hero = "this.handler.input.gamestate.hero.team" + teamid + ".player" + playerID + ".name";
+                            //this is grabbing the value of each item's name
+                            let aegischeck = "this.handler.input.gamestate.items.team" + teamid + ".player" + playerID + ".slot" + j + ".name";
+                            //if the items name is aegis
+                            if (eval(aegischeck) == "item_aegis") {
+                                e = playerID;
+                                return e;
+                            }
+                        }
+                    }
+                }          
+            }
+            console.log("Aegis impossible or not found");
+            e = -1;
+            return e;
+        });
     }
-    
-     //fs = require('fs');d
-     //respawnTime;
-
-     //   RoshCheck(RoshState)
-     //   {
-     //       console.log("Rosh Check Called");
-     //           //base respawn time (8 minutes)
-     //       if (RoshState == "respawn_base") {
-     //               console.log("Roshan taken, Respawn in 8-11 minutes");
-     //               this.respawnTime = 480
-     //           }
-     //           //variable respawn (8-11)
-     //       else if (RoshState == "respawn_variable") {
-     //               this.respawnTime = client.gamestate.map.roshan_state_end_seconds
-     //       }
-     //   }
-
-//    TimerCountdown() {
-//        if (respawnTime > 0) {
-//            RoshTimerHandle();
-//            respawnTime--;
-//        }
-//        else {
-//            fs.writeFileSync('RoshTimer.txt', '');
-//        }
-//    }
-
-//   RoshTimerHandle(){
-//       var respawnMinutes = Math.floor(respawnTime / 60);
-//       var respawnSeconds = (respawnTime % 60);
-//       var readableRespawnSeconds = LeadPad(respawnSeconds);
-//       var readableTimer = respawnMinutes + ":" + readableRespawnSeconds;
-//       return 
-//       fs.writeFileSync('RoshTimer.txt', readableTimer);
-//       console.log(readableTimer);
-//       }
-
-//       LeadPad(num) {
-//           num = num.toString();
-//           while (num.length < 2) num = "0" + num;
-//           return num;
-//       }
-
-////this adds a leading 0 to a number if it is under 10. e.g. if timer is 1 minute and 9 seconds it will return 09
-////by default text output would read 10:9.
-//        LeadPad(num) {
-//            num = num.toString();
-//            while (num.length < 2) num = "0" + num;
-//            return num;
-//    }   
 }
 module.exports = RoshanEvents;
 

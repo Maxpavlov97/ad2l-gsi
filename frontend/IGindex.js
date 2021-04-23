@@ -3,5 +3,5 @@ const socket = io();
 window.addEventListener("load", main);
 
 function main() {
-        rosh_addEvents();
+    rosh_addEvents();
 }
