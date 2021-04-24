@@ -30,7 +30,7 @@ function rosh_addEvents() {
         .getElementsByClassName("item-container")[0];
       for (const element of container.children) {
         if (element.classList.contains("roshIcon")) {
-          container.remove(element);
+          element.remove();
         }
       }
       aegisHolder = -1;

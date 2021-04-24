@@ -3,7 +3,7 @@ const socket = io();
 window.addEventListener("load", main);
 
 function main() {
-        draft_addEvents();
+  draft_addEvents();
 }
 
 socket.on("playerRanks", (e) => {
@@ -42,64 +42,3 @@ socket.on("playerRanks", (e) => {
     playerAvatarElement.src = player.avatar;
   }
 });
-socket.on("currentDraft", (e) => {
-  catchUpDraft(e);
-});
-
-// function changeSelection() {
-//   var arrayToDelete = document.getElementsByClassName("selected");
-//   for (var i = 0; i < arrayToDelete.length; i++) {
-//     //arrayToDelete[i].classList.remove("selected");
-//   }
-
-//   let id;
-//   if (activeTeam == "radiant") {
-//     if (pick) {
-//       if (radiantPickNum > 4) return;
-//       id = "radiantpick" + radiantPickNum;
-//     } else {
-//       if (radiantBanNum > 6) return;
-//       id = "radiantban" + radiantBanNum;
-//     }
-//   }
-//   if (activeTeam == "dire") {
-//     if (pick) {
-//       if (direPickNum > 4) return;
-//       id = "direpick" + direPickNum;
-//     } else {
-//       if (direBanNum > 6) return;
-//       id = "direban" + direBanNum;
-//     }
-//   }
-
-//   console.log(id);
-//   //document.getElementById(id).classList.add("selected");
-//   document.getElementById(id).src = "./img/waiting.webp";
-// }
-
-function catchUpDraft(currentDraft) {
-  console.log(currentDraft);
-  document.getElementById("radiant_bonus_time").textContent = time(
-    currentDraft.radiant_bonus_time
-  );
-  document.getElementById("dire_bonus_time").textContent = time(
-    currentDraft.dire_bonus_time
-  );
-  document.getElementById("draft_clock").textContent = time(
-    currentDraft.activeteam_time_remaining
-  );
-  setPickBans(currentDraft.team2, "radiant");
-  setPickBans(currentDraft.team3, "dire");
-  function setPickBans(team, side) {
-    for (const e in team) {
-      if (e.startsWith("pick") && e.endsWith("class") && team[e] != "") {
-        document.getElementById(side + "pick" + e[4]).src =
-          cdn + team[e] + cdn_end;
-      }
-      if (e.startsWith("ban") && e.endsWith("class") && team[e] != "") {
-        document.getElementById(side + "ban" + e[3]).src =
-          cdn + team[e] + cdn_end;
-      }
-    }
-  }
-}

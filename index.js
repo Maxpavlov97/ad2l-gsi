@@ -20,7 +20,6 @@ app.use(express.static("frontend"));
 io.on("connection", (socket) => {
   console.log("a user connected");
   console.log(socket.id);
-  catchUpClientDraft(socket);
 
   socket.on("disconnect", () => {
     console.log("user disconnected");
@@ -52,10 +51,8 @@ server.events.on("newclient", function (client) {
 async function getRanks(client) {
   console.log("fetching ranks");
   let playersRanks = [];
-  for (var team in client.gamestate.player) {
-    team = client.gamestate.player[team];
-    for (var player in team) {
-      player = team[player];
+  for (var team of client.gamestate.player) {
+    for (var player of team) {
       const url =
         "https://api.opendota.com/api/players/" + steamID(player.steamid);
       let response = await fetch(url);
