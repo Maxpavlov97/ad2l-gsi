@@ -6,7 +6,7 @@ const fetch = require("node-fetch");
 
 var d2gsi = require("dota2-gsi");
 var server = new d2gsi({
-  port: 12354,
+  port: 6999,
   //ip:
   tokens: ["maxtest"],
 });
@@ -39,8 +39,8 @@ server.events.on("newclient", function (client) {
   );
   console.log(client.auth);
   Handler = new GsiHandler(client, io);
-    var draftHandler = new (require("./my_modules/draft"))(Handler);
-    var RoshanHandler = new (require("./InGame/Roshan"))(Handler);
+  var draftHandler = new (require("./my_modules/draft"))(Handler);
+  var RoshanHandler = new (require("./InGame/Roshan"))(Handler);
 
   // console.log("calling getranks from client start");
   // getRanks(client).then((r) => {

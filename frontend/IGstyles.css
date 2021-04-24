@@ -1,11 +1,48 @@
 .respawntimer {
-    position: fixed;
-    bottom: 115px;
-    left: 253px;
-    width: 300px;
-    align-content: center;
-    color: white;
-    font-size: 20px;
-    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
-    text-anchor: middle;
+  position: fixed;
+  bottom: 115px;
+  left: 253px;
+  width: 300px;
+  align-content: center;
+  color: white;
+  font-size: 20px;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000;
+  text-anchor: middle;
+}
+
+#player-containers {
+  display: flex;
+  position: fixed;
+  top: 0px;
+  height: 80px;
+  place-content: center;
+  width: 100%;
+}
+#radiant-players,
+#dire-players {
+  display: flex;
+}
+.radiant-player,
+.dire-player {
+  width: 62px;
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.item-container {
+  width: 100%;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#top-spacer {
+  width: 200px;
+  height: 40px;
+}
+.roshIcon {
+  border-radius: 50%;
+  width: 15px;
+  height: 15px;
 }
