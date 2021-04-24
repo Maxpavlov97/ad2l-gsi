@@ -9,6 +9,10 @@ class RoshanEvents {
 
     setEvents(handler) {
         handler.addEvent("map:roshan_state_end_seconds", "roshTimer", (e) => {
+            if (this.handler.input.gamestate.map.game_state != "DOTA_GAMERULES_STATE_GAME_IN_PROGRESS") {
+                console.log("Game not in progress, gamestate = " + this.handler.input.gamestate.map.gamestate)
+                e = 0;
+            }
             return e;
         });
 
@@ -44,6 +48,12 @@ class RoshanEvents {
             console.log("Aegis impossible or not found");
             e = -1;
             return e;
+        });
+        handler.addEvent("map:game_state", "roshTimer", (e) => {
+            if (this.handler.input.gamestate.map.game_state != "DOTA_GAMERULES_STATE_GAME_IN_PROGRESS") {
+                e = 0;
+                return e;
+            }
         });
     }
 }
