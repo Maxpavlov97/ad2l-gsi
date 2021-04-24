@@ -9,13 +9,17 @@ class RoshanEvents {
 
     setEvents(handler) {
         handler.addEvent("map:roshan_state_end_seconds", "roshTimer", (e) => {
+            if (this.handler.input.gamestate.map.game_state != "DOTA_GAMERULES_STATE_GAME_IN_PROGRESS") {
+                console.log("Game not in progress, gamestate = " + this.handler.input.gamestate.map.gamestate)
+                e = 0;
+            }
             return e;
         });
 
         //checks for aegis in inventory
         handler.addEvent("map:roshan_state_end_seconds", "aegisHeld", (e) => {
             //makes sure rosh is in right phase to even allow for aegis (cant have aegis while rosh is alive or in variable respawn)
-            if (this.handler.input.gamestate.map.roshan_state == "respawn_base") {
+            if (this.handler.input.gamestate.map.roshan_state == "respawn_base" && this.handler.input.gamestate.map.game_state == "DOTA_GAMERULES_STATE_GAME_IN_PROGRESS") {
                 //checks to make sure aegis timer isnt expired
                 if ((this.handler.input.gamestate.map.roshan_state_end_seconds - 180) > 0) {
                     //for each player
@@ -44,6 +48,18 @@ class RoshanEvents {
             console.log("Aegis impossible or not found");
             e = -1;
             return e;
+        });
+        handler.addEvent("map:game_state", "roshTimer", (e) => {
+            if (this.handler.input.gamestate.map.game_state != "DOTA_GAMERULES_STATE_GAME_IN_PROGRESS") {
+                e = 0;
+                return e;
+            }
+        });
+        handler.addEvent("map:game_state", "aegisHeld", (e) => {
+            if (this.handler.input.gamestate.map.game_state != "DOTA_GAMERULES_STATE_GAME_IN_PROGRESS") {
+                e = -1;
+                return e;
+            }
         });
     }
 }

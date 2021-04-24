@@ -10,6 +10,9 @@ ingame events
 	-- every spawn
 	-- overall
 --buyback calc
+--Rosh Timer
+	--Account for game ending to remove timer
+
 if reliable + (unreliable-(unreliable/40)) > floor(200+(net worth/13))
 
 
