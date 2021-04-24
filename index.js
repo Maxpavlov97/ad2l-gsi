@@ -40,6 +40,19 @@ server.events.on("newclient", function (client) {
   Handler = new GsiHandler(client, io);
   var draftHandler = new (require("./my_modules/draft"))(Handler);
   var RoshanHandler = new (require("./InGame/Roshan"))(Handler);
+  var ranks;
+  var debounce = false;
+  client.on("draft:activeteam", async (e) => {
+    if (!debounce) {
+      debounce = true;
+      console.log(e.target);
+      if (!ranks) {
+        console.log("fetching ranks");
+        ranks = await getRanks(client);
+        io.emit("playerRanks", ranks);
+      }
+    }
+  });
 
   // console.log("calling getranks from client start");
   // getRanks(client).then((r) => {
@@ -50,9 +63,12 @@ server.events.on("newclient", function (client) {
 
 async function getRanks(client) {
   console.log("fetching ranks");
+  console.log(client.gamestate);
   let playersRanks = [];
-  for (var team of client.gamestate.player) {
-    for (var player of team) {
+  for (var team in client.gamestate.player) {
+    team = client.gamestate.player[team];
+    for (var player in team) {
+      player = team[player];
       const url =
         "https://api.opendota.com/api/players/" + steamID(player.steamid);
       let response = await fetch(url);
@@ -66,6 +82,7 @@ async function getRanks(client) {
       });
     }
   }
+  console.log(playersRanks);
   return playersRanks;
 }
 /**
