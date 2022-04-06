@@ -1,21 +1,27 @@
 function draft_addEvents() {
   socket.on("pick", (e) => {
-    console.log(e);
-    if (e.value)
-      document.getElementById(e.team + "pick" + e.num).src = getHeroImageUrl(
+    if (e.value) {
+      document.getElementById(e.team + "pick" + e.num).src = getHeroWEBMAsset(
         e.value
       );
-    else
-      document.getElementById(e.team + "pick" + e.num).src = "./img/empty.png";
+
+      // document.getElementById(e.team + "pick" + e.num).style.backgroundImage = "url(" + getHeroImageUrl(e.value) + ")"; 
+    }
+    // else
+      // document.getElementById(e.team + "pick" + e.num).src = "./img/empty.png";
   });
   socket.on("ban", (e) => {
     console.log(e);
-    if (e.value)
+    if (e.value) {
       document.getElementById(e.team + "ban" + e.num).src = getHeroImageUrl(
         e.value
       );
-    else
+      // document.getElementById(e.team + "ban" + e.num).type = "video/webm"
+    }
+    else{
       document.getElementById(e.team + "ban" + e.num).src = "./img/empty.png";
+      document.getElementById(e.team + "ban" + e.num).type = "image";
+    }
   });
   socket.on("activeteam_time_remaining", (e) => {
     //console.log(e);
@@ -39,8 +45,16 @@ function draft_addEvents() {
     else console.log("ban");
   });
   socket.on("selection", (e) => {
-    let id =
+    let id = 
       (e.team == 2 ? "radiant" : "dire") + (e.pick ? "pick" : "ban") + e.num;
-    document.getElementById(id).src = "./img/waiting.webp";
+    if (e.pick) {
+      document.getElementById(id).src = "./img/waiting.webm";
+    } else {
+      document.getElementById(id).src = "./img/waiting.webp";
+
+    }
+
+   
+
   });
 }

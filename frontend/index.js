@@ -43,6 +43,7 @@ socket.on("playerRanks", (e) => {
   }
 });
 socket.on("currentDraft", (e) => {
+  console.log('here!-------------------------------------')
   catchUpDraft(e);
 });
 
@@ -77,29 +78,35 @@ socket.on("currentDraft", (e) => {
 //   document.getElementById(id).src = "./img/waiting.webp";
 // }
 
-function catchUpDraft(currentDraft) {
-  console.log(currentDraft);
-  document.getElementById("radiant_bonus_time").textContent = time(
-    currentDraft.radiant_bonus_time
-  );
-  document.getElementById("dire_bonus_time").textContent = time(
-    currentDraft.dire_bonus_time
-  );
-  document.getElementById("draft_clock").textContent = time(
-    currentDraft.activeteam_time_remaining
-  );
-  setPickBans(currentDraft.team2, "radiant");
-  setPickBans(currentDraft.team3, "dire");
-  function setPickBans(team, side) {
-    for (const e in team) {
-      if (e.startsWith("pick") && e.endsWith("class") && team[e] != "") {
-        document.getElementById(side + "pick" + e[4]).src =
-          cdn + team[e] + cdn_end;
-      }
-      if (e.startsWith("ban") && e.endsWith("class") && team[e] != "") {
-        document.getElementById(side + "ban" + e[3]).src =
-          cdn + team[e] + cdn_end;
-      }
-    }
-  }
-}
+// function catchUpDraft(currentDraft) {
+//   // console.log(currentDraft);
+//   debugger;
+//   console.log("IM HERE--------------------------------------------------")
+//   document.getElementById("radiant_bonus_time").textContent = time(
+//     currentDraft.radiant_bonus_time
+//   );
+//   document.getElementById("dire_bonus_time").textContent = time(
+//     currentDraft.dire_bonus_time
+//   );
+//   document.getElementById("draft_clock").textContent = time(
+//     currentDraft.activeteam_time_remaining
+//   );
+//   setPickBans(currentDraft.team2, "radiant");
+//   setPickBans(currentDraft.team3, "dire");
+//   function setPickBans(team, side) {
+//     for (const e in team) {
+//       debugger;
+//       if (e.startsWith("pick") && e.endsWith("class") && team[e] != "") {
+//         document.getElementById(side + "pick" + e[4]).src =
+//           cdn + team[e] + cdn_end;
+
+//         document.getElementById(side + "pick" + e[4]).style.backgroundImage =
+//           "url('"+cdn + team[e] + cdn_end+"')";
+//       }
+//       if (e.startsWith("ban") && e.endsWith("class") && team[e] != "") {
+//         document.getElementById(side + "ban" + e[3]).src =
+//           cdn + team[e] + cdn_end;
+//       }
+//     }
+//   }
+// }

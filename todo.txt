@@ -7,3 +7,8 @@
 
 ingame events
 --bounty rune breakdown
+
+
+
+Make a readme
+Ensure that the installer knows to add `-gamestateintegration` to the launch options for dota or this won't work

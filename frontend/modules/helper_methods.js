@@ -4,10 +4,16 @@
  * @returns CDN link to hero portrait
  */
 function getHeroImageUrl(hero) {
-  console.log("getting");
   const cdn = "http://cdn.dota2.com/apps/dota2/images/heroes/";
   const cdn_end = "_full.png";
   return cdn + hero + cdn_end;
+}
+
+function getHeroWEBMAsset(hero) {
+  const base = "./heroes/npc_dota_hero_"
+  const end = ".webm"
+  // console.log('returning ')
+  return base + hero + end
 }
 
 /**

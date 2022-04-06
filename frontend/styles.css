@@ -1,30 +1,167 @@
+:root {
+  --radiant: rgb(1,179,85);
+  --dire: rgb(217,32,50);
+}
 body {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  height: 1080px;
   margin: 0;
-  padding-bottom: 3rem;
+  /* padding-bottom: 3rem; */
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
     Arial, sans-serif;
   position: fixed;
   bottom: 0px;
+  width: 1920px;
+  background-color: rgb(20,20,17);
+}
+
+.main-container {
+  display: flex;
+
+}
+
+.bans-camera-view {
+  display: flex;
+  flex-direction: row;
   width: 100%;
 }
-.radiant_pick {
-  height: 72px;
-  width: 128px;
+
+.ban-container {
+  width: 180px;
+  display: flex;
+  flex-direction: column;
 }
-.dire_pick {
-  height: 72px;
-  width: 128px;
+
+.reserve-time-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* width: 100%; */
+  height: 95px;
+  /* display: block; */
+  /* background-color: red; */
 }
-.radiant_ban {
-  padding: 3px;
-  height: 36px;
-  width: 64px;
-  filter: grayscale(100%);
+
+.reserve-time-text {
+  font-size: 24px;
+  font-weight: bold;
 }
-.dire_ban {
-  padding: 3px;
-  height: 36px;
-  width: 64px;
+
+.bonus-time {
+  font-size: 50px;
+  font-style: bold;
+}
+
+.top-container {
+  height: 95px;
+  width: 100%;
+  border-bottom: black 5px solid;
+  /* background-color: orange;  */
+}
+
+.overview-camera {
+  display: flex;
+  flex-direction: row;
+  /* background-color: blue; */
+  flex-grow: 1;
+}
+
+.picks-container {
+  width: 100%;
+  height: 200px;
+  display: flex;
+  flex-direction: row;
+  /* background-color: aqua; */
+  justify-content: space-between;
+}
+
+.picks {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+#radiant_picks {
+  border-top: var(--radiant) 5px solid;
+}
+#radiant_bans {
+  border-right: rgb(1,179,85) 5px solid;
+}
+.radiant-time {
+  border: rgb(1,179,85) 5px solid;
+}
+.radiant-color {
+  color: rgb(1,179,85);
+}
+
+#dire_picks {
+  border-top: rgb(217,32,50) 5px solid;
+}
+#dire_bans {
+  border-left: rgb(217,32,50) 5px solid;
+}
+.dire-time {
+  border: rgb(217,32,50) 5px solid;
+}
+.dire-color {
+  color: var(--dire);
+}
+
+.current-clock {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  align-items: center;
+  border-left: rgb(1,179,85) 5px solid;
+  border-right: rgb(217,32,50) 5px solid;
+  /* padding-top: 5px */
+}
+.empty-body {
+  height: 5px;
+  width: 100%;
+  /* flex-grow: 1; */
+  background: linear-gradient(to right, var(--radiant) 0%,var(--radiant) 50%,var(--dire) 50%,var(--dire) 100%);
+}
+/* .current-clock::before {
+  content: '';
+  height: 5px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to right, #ed8034 0%,#ed8034 50%,#2184cd 50%,#2184cd 100%);
+
+} */
+
+.test-vid {
+  height: 200px;
+  width: 200px;
+}
+
+.pick {
+  /* height: 200px; */
+  display: flex;
+  width: 169px;
+  /* width: 100%; */
+  overflow: hidden;
+  border-left: black 2px solid;
+  border-right: black 2px solid;
+  background-size: cover;
+  background-position: center;
+}
+
+video {
+  height: 100%;
+  width: 100%;
+  object-fit: fill;
+}
+
+.ban {
+  padding: 5px;
+  height: 100px;
+  width: 170px;
   filter: grayscale(100%);
 }
 .selected {
@@ -51,8 +188,8 @@ body {
 .player_name {
   font-weight: bold;
 }
-#main-container {
+/* #main-container {
   display: grid;
   grid-template-columns: auto 200px auto;
   grid-template-rows: auto auto;
-}
+} */
