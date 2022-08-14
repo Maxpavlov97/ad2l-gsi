@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Socket.IO chat</title>
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-    <div id="main-container" class="bans-camera-view">
-      <!-- <div id="radiantPlayers" style="display: flex; justify-content: flex-end">
+
+<head>
+  <title>Socket.IO chat</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <div id="main-container" class="bans-camera-view">
+    <!-- <div id="radiantPlayers" style="display: flex; justify-content: flex-end">
         <div class="player_container">
           <div id="player0_name" class="player_name"></div>
           <img id="player0_avatar" class="player_avatar" />
@@ -61,119 +63,125 @@
           <div id="player9_rank" class="badge_container"></div>
         </div>
       </div> -->
-      
 
-      <div id="leftReserveBans" class="ban-container">
 
-        <div class="reserve-time-container radiant-time">
-          <span  class="reserve-time-text" style="color: white;">Reserve Time</span>
+    <div id="leftReserveBans" class="ban-container">
 
-          <span id="radiant_bonus_time" class="bonus-time radiant-color">2:10</span>
+      <div class="reserve-time-container radiant-time">
+        <span class="reserve-time-text" style="color: white;">Reserve Time</span>
 
-        </div>
-
-        <div id="radiant_bans" class="bans">
-          <img class="ban" id="radiantban0" src="./img/empty.png" />
-          <img class="ban" id="radiantban1" src="./img/empty.png" />
-          <img class="ban" id="radiantban2" src="./img/empty.png" />
-          <img class="ban" id="radiantban3" src="./img/empty.png" />
-          <img class="ban" id="radiantban4" src="./img/empty.png" />
-          <img class="ban" id="radiantban5" src="./img/empty.png" />
-          <img class="ban" id="radiantban6" src="./img/empty.png" />
-        </div>
+        <span id="radiant_bonus_time" class="bonus-time radiant-color">2:10</span>
 
       </div>
 
-      <div class="overview-camera">
+      <div id="radiant_bans" class="bans">
+        <img class="ban" id="radiantban0" src="./img/empty.png" />
+        <img class="ban" id="radiantban1" src="./img/empty.png" />
+        <img class="ban" id="radiantban2" src="./img/empty.png" />
+        <img class="ban" id="radiantban3" src="./img/empty.png" />
+        <img class="ban" id="radiantban4" src="./img/empty.png" />
+        <img class="ban" id="radiantban5" src="./img/empty.png" />
+        <img class="ban" id="radiantban6" src="./img/empty.png" />
+      </div>
 
-        <div class="top-container">
+    </div>
 
-        </div>
+    <div class="overview-camera">
+
+      <div class="top-container">
 
       </div>
 
+    </div>
 
 
-      <div id="rightReserveBans" class="ban-container">
-        <div class="reserve-time-container dire-time">
-          <span  class="reserve-time-text" style="color: white;">Reserve Time</span>
-          <span id="dire_bonus_time" class="bonus-time dire-color">2:10</span>
 
-        </div>
+    <div id="rightReserveBans" class="ban-container">
+      <div class="reserve-time-container dire-time">
+        <span class="reserve-time-text" style="color: white;">Reserve Time</span>
+        <span id="dire_bonus_time" class="bonus-time dire-color">2:10</span>
 
-        <div id="dire_bans" class="bans">
-          <img class="ban" id="direban0" src="./img/empty.png" />
-          <img class="ban" id="direban1" src="./img/empty.png" />
-          <img class="ban" id="direban2" src="./img/empty.png" />
-          <img class="ban" id="direban3" src="./img/empty.png" />
-          <img class="ban" id="direban4" src="./img/empty.png" />
-          <img class="ban" id="direban5" src="./img/empty.png" />
-          <img class="ban" id="direban6" src="./img/empty.png" />
-        </div>
+      </div>
 
-
+      <div id="dire_bans" class="bans">
+        <img class="ban" id="direban0" src="./img/empty.png" />
+        <img class="ban" id="direban1" src="./img/empty.png" />
+        <img class="ban" id="direban2" src="./img/empty.png" />
+        <img class="ban" id="direban3" src="./img/empty.png" />
+        <img class="ban" id="direban4" src="./img/empty.png" />
+        <img class="ban" id="direban5" src="./img/empty.png" />
+        <img class="ban" id="direban6" src="./img/empty.png" />
       </div>
 
 
     </div>
 
 
+  </div>
 
-    <div class="picks-container">
 
-      <!-- <video  aria-hidden="true" src="./heroes/npc_dota_hero_alchemist.webm" type="video/webm" playsinline="true" autoplay="true" muted="true" loop="true" id="hero-video"> 
+
+  <div class="picks-container">
+
+    <!-- <video  aria-hidden="true" src="./heroes/npc_dota_hero_alchemist.webm" type="video/webm" playsinline="true" autoplay="true" muted="true" loop="true" id="hero-video"> 
       </video> -->
 
-      <div id="radiant_picks" class="picks">
-        <div class="pick"  >
-          <video aria-hidden="true"  id="radiantpick0"  type="video/webm" playsinline="true" autoplay="true" muted="true" loop="true"></video>
-        </div>
-        <div class="pick">
-          <video aria-hidden="true" id="radiantpick1"  type="video/webm" playsinline="true" autoplay="true" muted="true" loop="true"></video>
-        </div>
-        <div class="pick">
-          <video aria-hidden="true" id="radiantpick2"  type="video/webm" playsinline="true" autoplay="true" muted="true" loop="true"></video>
-        </div>
-        <div class="pick" >
-          <video aria-hidden="true" src="./img/waiting.gif" id="radiantpick3"  type="video/webm" playsinline="true" autoplay="true" muted="true" loop="true"></video>
-        </div>
-        <div class="pick" >
-          <video aria-hidden="true" id="radiantpick4"  type="video/webm" playsinline="true" autoplay="true" muted="true" loop="true"></video>
-        </div>
+    <div id="radiant_picks" class="picks">
+      <div class="pick">
+        <video aria-hidden="true" id="radiantpick0" type="video/webm" playsinline="true" autoplay="true" muted="true"
+          loop="true"></video>
       </div>
-
-      <div class="current-clock">
-        <div class="empty-body"></div>
-        <span
-        id="draft_clock"
-        style="font-size: 50px; color: white;"
-        >0:30</span
-        >
+      <div class="pick">
+        <video aria-hidden="true" id="radiantpick1" type="video/webm" playsinline="true" autoplay="true" muted="true"
+          loop="true"></video>
       </div>
-
-      <div id="dire_picks" class="picks">
-        <div class="pick"  >
-          <video aria-hidden="true"  id="direpick0"  type="video/webm" playsinline="true" autoplay="true" muted="true" loop="true"></video>
-        </div>
-        <div class="pick">
-          <video aria-hidden="true" id="direpick1"  type="video/webm" playsinline="true" autoplay="true" muted="true" loop="true"></video>
-        </div>
-        <div class="pick">
-          <video aria-hidden="true" id="direpick2"  type="video/webm" playsinline="true" autoplay="true" muted="true" loop="true"></video>
-        </div>
-        <div class="pick" >
-          <video aria-hidden="true" id="direpick3"  type="video/webm" playsinline="true" autoplay="true" muted="true" loop="true"></video>
-        </div>
-        <div class="pick" >
-          <video aria-hidden="true" id="direpick4"   playsinline="true" autoplay="true" muted="true" loop="true"></video>
-        </div>
+      <div class="pick">
+        <video aria-hidden="true" id="radiantpick2" type="video/webm" playsinline="true" autoplay="true" muted="true"
+          loop="true"></video>
       </div>
-
+      <div class="pick">
+        <video aria-hidden="true" src="./img/waiting.gif" id="radiantpick3" type="video/webm" playsinline="true"
+          autoplay="true" muted="true" loop="true"></video>
+      </div>
+      <div class="pick">
+        <video aria-hidden="true" id="radiantpick4" type="video/webm" playsinline="true" autoplay="true" muted="true"
+          loop="true"></video>
+      </div>
     </div>
 
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="./index.js"></script>
-    <script src="./modules/draft.js"></script>
-    <script src="./modules/helper_methods.js"></script>
-  </body>
+    <div class="current-clock">
+      <div class="empty-body"></div>
+      <span id="draft_clock" style="font-size: 50px; color: white;">0:30</span>
+    </div>
+
+    <div id="dire_picks" class="picks">
+      <div class="pick">
+        <video aria-hidden="true" id="direpick0" type="video/webm" playsinline="true" autoplay="true" muted="true"
+          loop="true"></video>
+      </div>
+      <div class="pick">
+        <video aria-hidden="true" id="direpick1" type="video/webm" playsinline="true" autoplay="true" muted="true"
+          loop="true"></video>
+      </div>
+      <div class="pick">
+        <video aria-hidden="true" id="direpick2" type="video/webm" playsinline="true" autoplay="true" muted="true"
+          loop="true"></video>
+      </div>
+      <div class="pick">
+        <video aria-hidden="true" id="direpick3" type="video/webm" playsinline="true" autoplay="true" muted="true"
+          loop="true"></video>
+      </div>
+      <div class="pick">
+        <video aria-hidden="true" id="direpick4" playsinline="true" autoplay="true" muted="true" loop="true"></video>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="./index.js"></script>
+  <script src="./modules/draft.js"></script>
+  <script src="./modules/helper_methods.js"></script>
+</body>
+
 </html>

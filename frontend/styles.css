@@ -1,7 +1,8 @@
 :root {
-  --radiant: rgb(1,179,85);
-  --dire: rgb(217,32,50);
+  --radiant: rgb(1, 179, 85);
+  --dire: rgb(217, 32, 50);
 }
+
 body {
   display: flex;
   flex-direction: column;
@@ -14,7 +15,7 @@ body {
   position: fixed;
   bottom: 0px;
   width: 1920px;
-  background-color: rgb(20,20,17);
+  background-color: rgb(20, 20, 17);
 }
 
 .main-container {
@@ -86,25 +87,31 @@ body {
 #radiant_picks {
   border-top: var(--radiant) 5px solid;
 }
+
 #radiant_bans {
-  border-right: rgb(1,179,85) 5px solid;
+  border-right: rgb(1, 179, 85) 5px solid;
 }
+
 .radiant-time {
-  border: rgb(1,179,85) 5px solid;
+  border: rgb(1, 179, 85) 5px solid;
 }
+
 .radiant-color {
-  color: rgb(1,179,85);
+  color: rgb(1, 179, 85);
 }
 
 #dire_picks {
-  border-top: rgb(217,32,50) 5px solid;
+  border-top: rgb(217, 32, 50) 5px solid;
 }
+
 #dire_bans {
-  border-left: rgb(217,32,50) 5px solid;
+  border-left: rgb(217, 32, 50) 5px solid;
 }
+
 .dire-time {
-  border: rgb(217,32,50) 5px solid;
+  border: rgb(217, 32, 50) 5px solid;
 }
+
 .dire-color {
   color: var(--dire);
 }
@@ -114,16 +121,18 @@ body {
   flex-direction: column;
   flex-grow: 1;
   align-items: center;
-  border-left: rgb(1,179,85) 5px solid;
-  border-right: rgb(217,32,50) 5px solid;
+  border-left: rgb(1, 179, 85) 5px solid;
+  border-right: rgb(217, 32, 50) 5px solid;
   /* padding-top: 5px */
 }
+
 .empty-body {
   height: 5px;
   width: 100%;
   /* flex-grow: 1; */
-  background: linear-gradient(to right, var(--radiant) 0%,var(--radiant) 50%,var(--dire) 50%,var(--dire) 100%);
+  background: linear-gradient(to right, var(--radiant) 0%, var(--radiant) 50%, var(--dire) 50%, var(--dire) 100%);
 }
+
 /* .current-clock::before {
   content: '';
   height: 5px;
@@ -164,30 +173,38 @@ video {
   width: 170px;
   filter: grayscale(100%);
 }
+
 .selected {
   border: 3px solid gold;
 }
+
 .player_container {
   padding: 10px;
 }
+
 .badge_container {
   position: relative;
 }
+
 .star {
   width: 64px;
   position: absolute;
   left: 0px;
 }
+
 .badge {
   width: 64px;
   border-radius: 25%;
 }
+
 .player_avatar {
   width: 64px;
 }
+
 .player_name {
   font-weight: bold;
 }
+
 /* #main-container {
   display: grid;
   grid-template-columns: auto 200px auto;

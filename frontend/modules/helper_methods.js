@@ -5,7 +5,8 @@
  */
 function getHeroImageUrl(hero) {
   const cdn = "http://cdn.dota2.com/apps/dota2/images/heroes/";
-  const cdn_end = "_full.png";
+  const cdn_end = "_lg.png";
+
   return cdn + hero + cdn_end;
 }
 
