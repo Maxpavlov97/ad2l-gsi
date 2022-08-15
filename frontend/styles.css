@@ -9,7 +9,6 @@ body {
   flex-grow: 1;
   height: 1080px;
   margin: 0;
-  /* padding-bottom: 3rem; */
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
     Arial, sans-serif;
   position: fixed;
@@ -20,7 +19,6 @@ body {
 
 .main-container {
   display: flex;
-
 }
 
 .bans-camera-view {
@@ -39,10 +37,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* width: 100%; */
   height: 95px;
-  /* display: block; */
-  /* background-color: red; */
 }
 
 .reserve-time-text {
@@ -59,13 +54,29 @@ body {
   height: 95px;
   width: 100%;
   border-bottom: black 5px solid;
-  /* background-color: orange;  */
+  display: flex;
+}
+
+.team-score {
+  flex-grow: .075;
+}
+
+.team-name {
+  flex-grow: .4;
+  border-left: black 5px solid;
+  border-right: black 5px solid;
+
+}
+
+.game-description {
+  flex-grow: .5;
 }
 
 .overview-camera {
   display: flex;
-  flex-direction: row;
-  /* background-color: blue; */
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
   flex-grow: 1;
 }
 
@@ -74,7 +85,6 @@ body {
   height: 200px;
   display: flex;
   flex-direction: row;
-  /* background-color: aqua; */
   justify-content: space-between;
 }
 
@@ -89,27 +99,27 @@ body {
 }
 
 #radiant_bans {
-  border-right: rgb(1, 179, 85) 5px solid;
+  border-right: var(--radiant) 5px solid;
 }
 
 .radiant-time {
-  border: rgb(1, 179, 85) 5px solid;
+  border: var(--radiant) 5px solid;
 }
 
 .radiant-color {
-  color: rgb(1, 179, 85);
+  color: var(--radiant);
 }
 
 #dire_picks {
-  border-top: rgb(217, 32, 50) 5px solid;
+  border-top: var(--dire) 5px solid;
 }
 
 #dire_bans {
-  border-left: rgb(217, 32, 50) 5px solid;
+  border-left: var(--dire) 5px solid;
 }
 
 .dire-time {
-  border: rgb(217, 32, 50) 5px solid;
+  border: var(--dire) 5px solid;
 }
 
 .dire-color {
@@ -119,30 +129,17 @@ body {
 .current-clock {
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
+  width: 190px;
   align-items: center;
-  border-left: rgb(1, 179, 85) 5px solid;
-  border-right: rgb(217, 32, 50) 5px solid;
-  /* padding-top: 5px */
+  border-left: var(--radiant) 5px solid;
+  border-right: var(--dire) 5px solid;
 }
 
-.empty-body {
+.gradiant {
   height: 5px;
   width: 100%;
-  /* flex-grow: 1; */
   background: linear-gradient(to right, var(--radiant) 0%, var(--radiant) 50%, var(--dire) 50%, var(--dire) 100%);
 }
-
-/* .current-clock::before {
-  content: '';
-  height: 5px;
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(to right, #ed8034 0%,#ed8034 50%,#2184cd 50%,#2184cd 100%);
-
-} */
 
 .test-vid {
   height: 200px;
@@ -150,10 +147,8 @@ body {
 }
 
 .pick {
-  /* height: 200px; */
   display: flex;
   width: 169px;
-  /* width: 100%; */
   overflow: hidden;
   border-left: black 2px solid;
   border-right: black 2px solid;
@@ -173,40 +168,3 @@ video {
   width: 170px;
   filter: grayscale(100%);
 }
-
-.selected {
-  border: 3px solid gold;
-}
-
-.player_container {
-  padding: 10px;
-}
-
-.badge_container {
-  position: relative;
-}
-
-.star {
-  width: 64px;
-  position: absolute;
-  left: 0px;
-}
-
-.badge {
-  width: 64px;
-  border-radius: 25%;
-}
-
-.player_avatar {
-  width: 64px;
-}
-
-.player_name {
-  font-weight: bold;
-}
-
-/* #main-container {
-  display: grid;
-  grid-template-columns: auto 200px auto;
-  grid-template-rows: auto auto;
-} */
